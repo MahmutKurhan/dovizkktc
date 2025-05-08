@@ -9,7 +9,6 @@ import Header from 'components/Header';
 import Hero from 'components/Hero';
 import CurrencyConverter from 'components/CurrencyConverter';
 import About from 'components/About';
-import Testimonials from 'components/Testimonials';
 import Footer from 'components/Footer';
 
 export default function Home() {
@@ -72,6 +71,11 @@ export default function Home() {
     }
   };
 
+  // Para birimi dönüştürme fonksiyonu
+  const handleConvert = () => {
+    const rate = currencies.find(c => c.code.startsWith(selectedCurrency + '/'))?.rate || 0;
+    setConvertedAmount((amount * rate).toFixed(2));
+  };
 
   // Sayfa yüklendiğinde API'den verileri çek
   useEffect(() => {
@@ -82,17 +86,17 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // Para birimi dönüştürme fonksiyonu
-  const handleConvert = () => {
-    const rate = currencies.find(c => c.code.startsWith(selectedCurrency + '/'))?.rate || 0;
-    setConvertedAmount((amount * rate).toFixed(2));
-  };
+  // Sayfa yüklendiğinde her zaman dark mode'u etkinleştir
+  useEffect(() => {
+    document.documentElement.classList.add('dark');
+  }, []);
 
+  // Döviz değerini güncelle
   useEffect(() => {
     if (currencies.length > 0) {
       handleConvert();
     }
-  }, [amount, selectedCurrency, currencies]);
+  }, [amount, selectedCurrency, currencies, handleConvert]);
 
   // Yukarı çık butonu için görünürlük state'i
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -121,7 +125,7 @@ export default function Home() {
 
   return (
     <Page title="Döviz Kurları | Anlık ve Güncel">
-      <Header />
+      <Header forceDarkMode={true} />
       
       {/* Hero Bölümü */}
       <div id="hero">
@@ -149,11 +153,6 @@ export default function Home() {
       {/* Kurlar Bölümü */}
       <div id="rates">
         <About />
-      </div>
-      
-      {/* Grafikler Bölümü */}
-      <div id="charts">
-        <Testimonials />
       </div>
       
       {/* Haberler Bölümü */}

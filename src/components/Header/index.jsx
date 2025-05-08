@@ -2,17 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { HiRefresh } from 'react-icons/hi';
 
+// forceDarkMode parametresini kaldırdım
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const savedMode = localStorage.getItem('darkMode');
-      return savedMode ? JSON.parse(savedMode) : 
-             window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    return false;
-  });
+  
+  // darkMode değişkeni artık gerekli değil, kaldırdım
   const navRef = useRef(null);
   
   // Döviz kurları için state'ler
@@ -20,7 +15,7 @@ const Header = () => {
   const [loading, setLoading] = useState(true);
   const [lastUpdateTime, setLastUpdateTime] = useState('');
 
-  // Aktif bölüm için yeni state ekleyelim
+  // Aktif bölüm için state
   const [activeSection, setActiveSection] = useState('hero');
 
   // Daha akıcı kaydırma algılama
@@ -49,19 +44,13 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Gelişmiş karanlık mod geçişi
+  
+  // Sayfa yüklendiğinde dark mode'u zorla uygula
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    
-    localStorage.setItem('darkMode', JSON.stringify(darkMode));
-  }, [darkMode]);
+    document.documentElement.classList.add('dark');
+  }, []);
 
-  // Mobil menü açıkken kaydırmayı engelle
+  // Mobil menü açıkken kaydırmayı engelle 
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -84,64 +73,64 @@ const Header = () => {
     document.addEventListener('keydown', handleEscKey);
     return () => document.removeEventListener('keydown', handleEscKey);
   }, []);
-  
+
   // API'den döviz kurlarını çekme
-// API'den döviz kurlarını çekme
-const fetchCurrencyRates = async () => {
-  setLoading(true);
-  try {
-    const response = await axios.get('https://doviz.gokelci.com/api/merkezBank/cek.php');
-    
-    // API'den gelen veri yapısını kontrol et ve işle
-    if (response.data && response.data.status === 'success' && Array.isArray(response.data.data)) {
-      // Doğrudan API'nin data dizisini kullan
-      setCurrencies(response.data.data);
+  const fetchCurrencyRates = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('https://doviz.gokelci.com/api/merkezBank/cek.php');
       
-      // Son güncelleme zamanını al
-      if (response.data.lastUpdate) {
-        setLastUpdateTime(response.data.lastUpdate);
-      } else {
+      // API'den gelen veri yapısını kontrol et ve işle
+      if (response.data && response.data.status === 'success' && Array.isArray(response.data.data)) {
+        // Doğrudan API'nin data dizisini kullan
+        setCurrencies(response.data.data);
+        
+        // Son güncelleme zamanını al
+        if (response.data.lastUpdate) {
+          setLastUpdateTime(response.data.lastUpdate);
+        } else {
+          setLastUpdateTime(new Date().toLocaleString('tr-TR'));
+        }
+      } else if (response.data && Array.isArray(response.data)) {
+        // Alternatif API formatı - verinin doğrudan dizi olduğu durumda
+        // API'den gelen verileri formatlama
+        const formattedCurrencies = response.data.map(item => {
+          // API verilerini uygun formata dönüştürme
+          const code = item.Sembol ? `${item.Sembol}/TRY` : item.code;
+          const rate = item.Doviz_Alis ? parseFloat(item.Doviz_Alis) : (parseFloat(item.buying) || 0);
+          const buying = item.Doviz_Alis ? parseFloat(item.Doviz_Alis) : (parseFloat(item.buying) || 0);
+          const selling = item.Doviz_Satis ? parseFloat(item.Doviz_Satis) : (parseFloat(item.selling) || 0);
+          
+          // Trend değerleri
+          const trend = item.trend || (Math.random() > 0.5 ? 'up' : 'down');
+          const change = item.change || (trend === 'up' ? '+%0.8' : '-%0.5');
+          
+          return {
+            code,
+            rate,
+            change,
+            trend,
+            buying,
+            selling,
+            unit: parseInt(item.Birim || item.unit) || 1,
+            name: item.Isim || item.name || '',
+            effectiveBuying: item.Efektif_Alis ? parseFloat(item.Efektif_Alis) : (parseFloat(item.effectiveBuying) || 0),
+            effectiveSelling: item.Efektif_Satis ? parseFloat(item.Efektif_Satis) : (parseFloat(item.effectiveSelling) || 0)
+          };
+        });
+        
+        setCurrencies(formattedCurrencies);
         setLastUpdateTime(new Date().toLocaleString('tr-TR'));
+      } else {
+        console.error('API yanıtı beklenen formatta değil:', response.data);
       }
-    } else if (response.data && Array.isArray(response.data)) {
-      // Alternatif API formatı - verinin doğrudan dizi olduğu durumda
-      // API'den gelen verileri formatlama
-      const formattedCurrencies = response.data.map(item => {
-        // API verilerini uygun formata dönüştürme
-        const code = item.Sembol ? `${item.Sembol}/TRY` : item.code;
-        const rate = item.Doviz_Alis ? parseFloat(item.Doviz_Alis) : (parseFloat(item.buying) || 0);
-        const buying = item.Doviz_Alis ? parseFloat(item.Doviz_Alis) : (parseFloat(item.buying) || 0);
-        const selling = item.Doviz_Satis ? parseFloat(item.Doviz_Satis) : (parseFloat(item.selling) || 0);
-        
-        // Trend değerleri
-        const trend = item.trend || (Math.random() > 0.5 ? 'up' : 'down');
-        const change = item.change || (trend === 'up' ? '+%0.8' : '-%0.5');
-        
-        return {
-          code,
-          rate,
-          change,
-          trend,
-          buying,
-          selling,
-          unit: parseInt(item.Birim || item.unit) || 1,
-          name: item.Isim || item.name || '',
-          effectiveBuying: item.Efektif_Alis ? parseFloat(item.Efektif_Alis) : (parseFloat(item.effectiveBuying) || 0),
-          effectiveSelling: item.Efektif_Satis ? parseFloat(item.Efektif_Satis) : (parseFloat(item.effectiveSelling) || 0)
-        };
-      });
-      
-      setCurrencies(formattedCurrencies);
-      setLastUpdateTime(new Date().toLocaleString('tr-TR'));
-    } else {
-      console.error('API yanıtı beklenen formatta değil:', response.data);
+    } catch (error) {
+      console.error('Döviz kurları alınırken hata oluştu:', error);
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.error('Döviz kurları alınırken hata oluştu:', error);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
+  
   // Component yüklendiğinde ve periyodik olarak kurları güncelleme
   useEffect(() => {
     fetchCurrencyRates();
@@ -159,13 +148,13 @@ const fetchCurrencyRates = async () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 ${
         scrolled 
-          ? 'py-2.5 bg-white/90 dark:bg-[#0b0b0a]/90 shadow-lg backdrop-blur-lg' 
-          : 'py-4 bg-white dark:bg-[#0b0b0a]'
-      } transition-all duration-300 border-b border-transparent ${scrolled ? 'border-gray-200/70 dark:border-gray-800/70' : ''}`}
+          ? 'py-2.5 bg-[#0b0b0a]/90 shadow-lg backdrop-blur-lg' 
+          : 'py-4 bg-[#0b0b0a]'
+      } transition-all duration-300 border-b border-transparent ${scrolled ? 'border-gray-800/70' : ''}`}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 overflow-hidden">
         <div className="flex items-center justify-between">
-          {/* Logo & Marka - Altın/Haki Renkleri */}
+          {/* Logo - karanlık temaya uygun stiller */}
           <a href="/" className="flex items-center group" aria-label="Ana Sayfa'ya git">
             <div className="mr-3 relative overflow-hidden transition-transform duration-300 group-hover:scale-105">
               <div className="w-11 h-11 flex items-center justify-center bg-gradient-to-br from-[#eddc0f] to-[#9a8c14] rounded-full shadow-md">
@@ -176,17 +165,17 @@ const fetchCurrencyRates = async () => {
             </div>
             <div>
               <div className="flex items-baseline">
-                <h1 className="text-2xl font-extrabold text-gray-800 dark:text-white tracking-tight">Döviz<span className="text-[#9a8c14] dark:text-[#eddc0f]">Pro</span></h1>
-                <div className="h-1.5 w-1.5 rounded-full bg-[#eddc0f] dark:bg-[#eddc0f] ml-1 animate-pulse"></div>
+                <h1 className="text-2xl font-extrabold text-white tracking-tight">Döviz<span className="text-[#eddc0f]">Pro</span></h1>
+                <div className="h-1.5 w-1.5 rounded-full bg-[#eddc0f] ml-1 animate-pulse"></div>
               </div>
               <div className="flex items-center mt-0.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#ea0b0b] mr-1.5 animate-ping"></span>
-                <p className="text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wide">CANLI DÖVİZ KURLARI</p>
+                <p className="text-xs font-medium text-gray-400 tracking-wide">CANLI DÖVİZ KURLARI</p>
               </div>
             </div>
           </a>
 
-          {/* Masaüstü Navigasyon - Altın/Haki Tonları */}
+          {/* Masaüstü Navigasyon */}
           <nav className="hidden md:block">
             <div className="relative overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800 p-1 shadow-inner">
               <ul className="flex relative z-10">
@@ -307,7 +296,7 @@ const fetchCurrencyRates = async () => {
             <div className="hidden sm:block">
               <div className="relative">
                 <select 
-                  className="appearance-none pl-3 pr-9 py-1.5 text-sm bg-gray-100 dark:bg-gray-800 rounded-md text-gray-700 dark:text-gray-300 font-medium border-0 focus:outline-none focus:ring-2 focus:ring-[#eddc0f] focus:ring-offset-1 cursor-pointer shadow-sm"
+                  className="appearance-none pl-3 pr-9 py-1.5 text-sm bg-gray-800 rounded-md text-gray-300 font-medium border-0 focus:outline-none focus:ring-2 focus:ring-[#eddc0f] focus:ring-offset-1 cursor-pointer shadow-sm"
                   aria-label="Dil Seçimi"
                 >
                   <option>🇹🇷 TR</option>
@@ -322,44 +311,10 @@ const fetchCurrencyRates = async () => {
               </div>
             </div>
 
-            {/* Karanlık Mod Düğmesi - Altın/Haki Renkleri */}
-            <button 
-              onClick={() => setDarkMode(!darkMode)}
-              className="relative flex items-center justify-center w-9 h-9 rounded-md bg-gray-100 dark:bg-gray-800 overflow-hidden group shadow-sm transition-transform hover:scale-105 active:scale-95"
-              aria-label={darkMode ? "Aydınlık moda geç" : "Karanlık moda geç"}
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#eddc0f] to-[#9a8c14] opacity-0 group-hover:opacity-10 transition-opacity"></div>
-              <span className="sr-only">{darkMode ? "Aydınlık moda geç" : "Karanlık moda geç"}</span>
-              
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className={`h-5 w-5 text-gray-700 dark:text-gray-300 transition-all ${darkMode ? 'opacity-0 rotate-90 scale-0' : 'opacity-100 rotate-0 scale-100'}`}
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-              
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className={`absolute h-5 w-5 text-[#eddc0f] transition-all ${darkMode ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'}`}
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
-              
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-30 rounded-md overflow-hidden">
-                <div className="absolute -inset-full bg-gradient-to-r from-[#eddc0f] via-[#9a8c14] to-[#eddc0f] animate-spin-slow blur-2xl opacity-30 dark:opacity-20"></div>
-              </div>
-            </button>
-
             {/* Mobil Menü Düğmesi */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden group relative overflow-hidden flex items-center justify-center w-9 h-9 rounded-md bg-gray-100 dark:bg-gray-800 shadow-sm transition-transform hover:scale-105 active:scale-95"
+              className="md:hidden group relative overflow-hidden flex items-center justify-center w-9 h-9 rounded-md bg-gray-800 shadow-sm transition-transform hover:scale-105 active:scale-95"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
               aria-label="Ana menüyü aç/kapat"
@@ -376,11 +331,11 @@ const fetchCurrencyRates = async () => {
         </div>
       </div>
 
-      {/* Mobil Menü - Altın/Haki Renk Paletine Uyarlandı */}
+      {/* Mobil Menü - sadece karanlık temaya uygun stiller */}
       <div 
         id="mobile-menu"
         ref={navRef}
-        className={`absolute top-full left-0 right-0 bg-white dark:bg-[#0b0b0a] shadow-lg transition-all duration-300 overflow-hidden ${
+        className={`absolute top-full left-0 right-0 bg-[#0b0b0a] shadow-lg transition-all duration-300 overflow-hidden ${
           mobileMenuOpen ? 'max-h-[80vh] opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-4'
         }`}
         aria-hidden={!mobileMenuOpen}

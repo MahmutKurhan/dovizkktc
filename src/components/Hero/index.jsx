@@ -14,8 +14,8 @@ const Hero = ({ currencies, loading }) => {
   }, []);
 
   return (
-    <section className="relative overflow-hidden pb-20 pt-24 md:pt-28 lg:pt-32">
-      {/* Revize Edilmiş Arkaplan Efektleri - Yeni Renk Paleti */}
+    <section className="relative overflow-hidden pb-12 sm:pb-20 pt-20 sm:pt-24 md:pt-28 lg:pt-32">
+      {/* Arkaplan efektleri */}
       <div className="absolute inset-0 -z-20 bg-gradient-to-b from-[#eddc0f]/10 via-white to-white dark:from-[#0b0b0a]/90 dark:via-[#0b0b0a] dark:to-[#0b0b0a]"></div>
       <div className="absolute inset-0 -z-20 bg-[url('/grid-pattern.svg')] bg-center opacity-[0.08] [mask-image:radial-gradient(circle_at_top,white,transparent_70%)]"></div>
       <div className="absolute -top-64 left-1/3 -z-20 h-[40rem] w-[40rem] rounded-full bg-gradient-to-r from-[#eddc0f]/20 to-[#9a8c14]/20 blur-3xl dark:from-[#eddc0f]/10 dark:to-[#9a8c14]/10 animate-pulse-slow"></div>
@@ -23,11 +23,13 @@ const Hero = ({ currencies, loading }) => {
       <div className="absolute left-1/2 top-1/2 -z-20 h-[20rem] w-[20rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-[#ea0b0b]/5 to-[#9a8c14]/10 blur-3xl dark:from-[#ea0b0b]/5 dark:to-[#9a8c14]/5 animate-pulse-slow animation-delay-4000"></div>
       
       <div className="container mx-auto px-4">
-        <div className="relative grid items-center gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
-          {/* Sol Kısım - Gözden Geçirilmiş Metin ve Butonlar */}
-          <div className={`flex flex-col transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
+        {/* Mobil görünümde daha kompakt bir layout */}
+        <div className="relative items-center gap-8 md:grid md:grid-cols-2 md:gap-12 lg:gap-16">
+          
+          {/* Sol Kısım - Mobil cihazlarda gizlenecek */}
+          <div className={`hidden md:flex flex-col transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
             
-            {/* Ana Başlık - Yeni Renk Paleti */}
+            {/* Ana Başlık */}
             <h1 className="mb-7 text-4xl font-extrabold leading-tight tracking-tight text-[#0b0b0a] dark:text-white md:text-5xl lg:text-6xl">
               <span className="block mb-2 drop-shadow-sm">Anlık <span className="relative inline">
                 Döviz 
@@ -50,12 +52,12 @@ const Hero = ({ currencies, loading }) => {
               </span>
             </h1>
             
-            {/* Açıklama - Gözden Geçirilmiş */}
+            {/* Açıklama */}
             <p className="mb-8 max-w-2xl text-lg text-[#0b0b0a]/80 dark:text-gray-300">
               En güncel döviz kurlarını takip edin, anında para birimi dönüşümleri yapın ve finansal kararlarınızı <span className="font-medium text-[#9a8c14] dark:text-[#eddc0f]">güvenle</span> alın.
             </p>
             
-            {/* Butonlar - Yeni Renk Paleti */}
+            {/* Butonlar */}
             <div className="flex flex-wrap gap-4">
               <button className="group relative overflow-hidden rounded-full bg-gradient-to-r from-[#eddc0f] via-[#9a8c14] to-[#eddc0f] px-7 py-4 font-medium text-[#0b0b0a] shadow-xl transition-all duration-300 hover:shadow-[#eddc0f]/25 dark:hover:shadow-[#9a8c14]/40 hover:scale-105 active:scale-[0.98]">
                 <span className="relative z-10 flex items-center gap-2">
@@ -73,7 +75,7 @@ const Hero = ({ currencies, loading }) => {
               </button>
             </div>
             
-            {/* Öne Çıkan Özellikler - Güncellendi */}
+            {/* Öne Çıkan Özellikler */}
             <div className="mt-10 space-y-4">
               {[
                 { title: 'Tüm Dünya Para Birimleri', description: '180+ farklı para biriminin anlık değerleri' },
@@ -91,25 +93,28 @@ const Hero = ({ currencies, loading }) => {
                 </div>
               ))}
             </div>
-            
           </div>
           
-          {/* Sağ Kısım - Revize Edilmiş Kur Kartı */}
-          <div className={`relative mt-8 flex items-center justify-center md:mt-0 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          {/* Mobil için mini başlık - Sadece mobilde gösterilecek */}
+          <div className="mb-4 text-center md:hidden">
+          </div>
+          
+          {/* Sağ Kısım - Kur Kartı (Tüm ekranlarda gösterilecek) */}
+          <div className={`relative flex items-center justify-center transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} md:mt-0 mx-auto w-full max-w-md`}>
             <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-tr from-[#eddc0f]/30 to-[#9a8c14]/30 opacity-60 blur-3xl dark:from-[#eddc0f]/10 dark:to-[#9a8c14]/10"></div>
             
-            {/* Hareketli Para Simgeleri - Yeni Renk Paleti */}
-            <div className="absolute z-30 animate-custom-float" style={{ top: '5%', left: '2%' }}>
+            {/* Hareketli Para Simgeleri - Sadece tablet ve masaüstünde görünecek */}
+            <div className="absolute z-30 animate-custom-float hidden md:flex" style={{ top: '5%', left: '2%' }}>
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-xl dark:bg-[#0b0b0a] ring-2 ring-[#eddc0f]/30 dark:ring-[#eddc0f]/20 hover:scale-110 transition-transform duration-300">
                 <span className="text-2xl font-bold bg-gradient-to-r from-[#eddc0f] to-[#9a8c14] bg-clip-text text-transparent animate-pulse-slow">$</span>
               </div>
             </div>
-            <div className="absolute z-30 animate-custom-float2" style={{ top: '75%', right: '0%' }}>
+            <div className="absolute z-30 animate-custom-float2 hidden md:flex" style={{ top: '75%', right: '0%' }}>
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-xl dark:bg-[#0b0b0a] ring-2 ring-[#9a8c14]/30 dark:ring-[#9a8c14]/20 hover:scale-110 transition-transform duration-300">
                 <span className="text-2xl font-bold bg-gradient-to-r from-[#9a8c14] to-[#eddc0f] bg-clip-text text-transparent animate-pulse-slow">€</span>
               </div>
             </div>
-            <div className="absolute z-30 animate-custom-float3" style={{ bottom: '10%', left: '0%' }}>
+            <div className="absolute z-30 animate-custom-float3 hidden md:flex" style={{ bottom: '10%', left: '0%' }}>
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-xl dark:bg-[#0b0b0a] ring-2 ring-[#ea0b0b]/30 dark:ring-[#ea0b0b]/20 hover:scale-110 transition-transform duration-300">
                 <span className="text-2xl font-bold bg-gradient-to-r from-[#ea0b0b] to-[#9a8c14] bg-clip-text text-transparent animate-pulse-slow">£</span>
               </div>
@@ -125,8 +130,8 @@ const Hero = ({ currencies, loading }) => {
           </div>
         </div>
         
-        {/* Güven Göstergeleri - Yeni Renk Paleti */}
-        <div className={`mt-16 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        {/* Güven Göstergeleri - Sadece tablet ve masaüstünde görünecek */}
+        <div className={`mt-8 md:mt-16 hidden md:block transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="flex flex-wrap items-center justify-center gap-6 text-center bg-white/40 dark:bg-[#0b0b0a]/60 py-3 px-6 rounded-lg backdrop-blur-sm border border-[#eddc0f]/10 dark:border-[#eddc0f]/5">
             <p className="text-sm font-medium text-[#0b0b0a]/80 dark:text-gray-300">Verilerin güvenilir kaynakları:</p>
             {['Merkez Bankası', 'Reuters', 'Bloomberg', 'Forex'].map((source, index) => (
@@ -138,11 +143,11 @@ const Hero = ({ currencies, loading }) => {
           </div>
         </div>
         
-        {/* Aksan Rengi Dokunuşu - Yeni Kırmızı Aksan */}
+        {/* Dekore Edici Efektler */}
         <div className="absolute top-[20%] right-[5%] h-24 w-24 rounded-full bg-[#ea0b0b]/5 blur-3xl dark:bg-[#ea0b0b]/3 animate-pulse-slow"></div>
         
-        {/* Hareketli dalga efekti - Altın/Haki renklerde */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 w-full overflow-hidden">
+        {/* Hareketli dalga efekti - Sadece tablet ve masaüstünde görünecek */}
+        <div className="absolute bottom-0 left-0 right-0 h-16 w-full overflow-hidden hidden md:block">
           <div className="absolute -bottom-1 left-0 right-0 h-16 w-[200%] animate-wave bg-[url('/wave.svg')] bg-repeat-x opacity-10 [mask-image:linear-gradient(to-r,#eddc0f,#9a8c14)]"></div>
         </div>
       </div>
