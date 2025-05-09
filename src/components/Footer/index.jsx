@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { HiMail, HiPhone, HiRefresh } from 'react-icons/hi';
-import { FaTwitter, FaFacebook, FaInstagram, FaLinkedin, FaGooglePlay, FaApple } from 'react-icons/fa';
+import { FaInstagram, FaGooglePlay, FaApple } from 'react-icons/fa';
 
 const Footer = () => {
   // Döviz kurları için state'ler
@@ -83,31 +83,29 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Hakkımızda - Altın/Haki tonlarına güncellendi */}
           <div className="col-span-1">
+            {/* QR APEX isim düzeltmesi */}
             <h3 className="text-xl font-bold mb-4 flex items-center">
               <img 
                 src="/APXQR.svg" 
-                alt="Döviz Uygulaması Logo" 
+                alt="QR APEX Logo" 
                 className="h-7 mr-2"
               />
               <span className="bg-gradient-to-r from-[#9a8c14] to-[#eddc0f] dark:from-[#eddc0f] dark:to-[#9a8c14] bg-clip-text text-transparent">
-                Döviz Uygulaması
+                QR APEX
               </span>
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm">
               Güncel döviz kurları, çevirici ve profesyonel finans araçları ile hizmetinizdeyiz. Anlık ve doğru verilerle güvenilir çözümler sunuyoruz.
             </p>
-            <div className="flex space-x-4 mt-4">
-              <a href="#" className="h-10 w-10 rounded-full bg-[#eddc0f]/10 hover:bg-[#eddc0f]/20 dark:bg-[#eddc0f]/10 dark:hover:bg-[#eddc0f]/20 flex items-center justify-center transition-colors duration-200">
-                <FaTwitter className="h-5 w-5 text-[#9a8c14] dark:text-[#eddc0f]" />
-              </a>
-              <a href="#" className="h-10 w-10 rounded-full bg-[#eddc0f]/10 hover:bg-[#eddc0f]/20 dark:bg-[#eddc0f]/10 dark:hover:bg-[#eddc0f]/20 flex items-center justify-center transition-colors duration-200">
-                <FaFacebook className="h-5 w-5 text-[#9a8c14] dark:text-[#eddc0f]" />
-              </a>
-              <a href="#" className="h-10 w-10 rounded-full bg-[#eddc0f]/10 hover:bg-[#eddc0f]/20 dark:bg-[#eddc0f]/10 dark:hover:bg-[#eddc0f]/20 flex items-center justify-center transition-colors duration-200">
+            <div className="flex mt-4">
+              {/* Sadece Instagram bağlantısı kalacak */}
+              <a 
+                href="https://www.instagram.com/qrapexexchange" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-10 w-10 rounded-full bg-[#eddc0f]/10 hover:bg-[#eddc0f]/20 dark:bg-[#eddc0f]/10 dark:hover:bg-[#eddc0f]/20 flex items-center justify-center transition-colors duration-200"
+              >
                 <FaInstagram className="h-5 w-5 text-[#9a8c14] dark:text-[#eddc0f]" />
-              </a>
-              <a href="#" className="h-10 w-10 rounded-full bg-[#eddc0f]/10 hover:bg-[#eddc0f]/20 dark:bg-[#eddc0f]/10 dark:hover:bg-[#eddc0f]/20 flex items-center justify-center transition-colors duration-200">
-                <FaLinkedin className="h-5 w-5 text-[#9a8c14] dark:text-[#eddc0f]" />
               </a>
             </div>
           </div>
@@ -233,11 +231,11 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="text-gray-600 dark:text-gray-300 text-sm flex items-start">
                 <HiMail className="h-5 w-5 text-[#9a8c14] dark:text-[#eddc0f] mr-2 mt-0.5" />
-                <span>iletisim@dovizuygulamasi.com</span>
+                <span>info@qrapexchange.com</span>
               </li>
               <li className="text-gray-600 dark:text-gray-300 text-sm flex items-start">
                 <HiPhone className="h-5 w-5 text-[#9a8c14] dark:text-[#eddc0f] mr-2 mt-0.5" />
-                <span>+90 (212) 123 45 67</span>
+                <span>+90 (533) 851 91 93</span>
               </li>
             </ul>
 
@@ -247,8 +245,9 @@ const Footer = () => {
         {/* Alt Çizgi - Altın/Haki tonlarına güncellendi */}
         <div className="pt-8 border-t border-[#eddc0f]/10 dark:border-[#eddc0f]/10">
           <div className="flex flex-col md:flex-row justify-between items-center">
+            {/* Telif hakkı bilgisi de güncellendi */}
             <p className="text-gray-500 dark:text-gray-400 text-sm text-center md:text-left">
-              © {new Date().getFullYear()} Döviz Uygulaması. Tüm hakları saklıdır.
+              © {new Date().getFullYear()} QR APEX. Tüm hakları saklıdır.
             </p>
             <div className="mt-4 md:mt-0 flex space-x-6">
               <a href="#" className="text-gray-500 hover:text-[#9a8c14] dark:text-gray-400 dark:hover:text-[#eddc0f] text-xs transition-colors duration-200">Gizlilik Politikası</a>

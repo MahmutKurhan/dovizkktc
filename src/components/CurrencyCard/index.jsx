@@ -1,7 +1,7 @@
 const CurrencyCard = ({ currencies = [], loading }) => {
   
   // Öncelikli para birimleri: USD, EUR, GBP
-  const priorityCurrencies = ['USD', 'EUR', 'GBP','KWD'];
+  const priorityCurrencies = ['USD', 'EUR', 'GBP'];
   
   // En popüler para birimlerini öncelikli olarak göster
   const topCurrencies = loading ? [] : priorityCurrencies
@@ -10,10 +10,10 @@ const CurrencyCard = ({ currencies = [], loading }) => {
     .slice(0, 4); // en fazla 4 para birimi göster
   
   // Eğer öncelikli para birimleri 4'ten azsa, diğerlerinden tamamla
-  if (topCurrencies.length < 4 && currencies.length > 0) {
+  if (topCurrencies.length < 3 && currencies.length > 0) {
     const remainingCurrencies = currencies
       .filter(c => !priorityCurrencies.some(code => c.code.startsWith(code)))
-      .slice(0, 4 - topCurrencies.length);
+      .slice(0, 3 - topCurrencies.length);
     
     topCurrencies.push(...remainingCurrencies);
   }

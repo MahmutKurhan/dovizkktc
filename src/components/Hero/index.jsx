@@ -110,7 +110,7 @@ const Hero = ({ currencies, loading }) => {
             <div className="absolute inset-0 -z-10 rounded-full bg-gradient-to-tr from-[#eddc0f]/30 to-[#9a8c14]/30 opacity-60 blur-3xl dark:from-[#eddc0f]/10 dark:to-[#9a8c14]/10"></div>
             
             {/* Hareketli Para Simgeleri - Sadece tablet ve masaüstünde görünecek */}
-            <div className="absolute z-30 animate-custom-float hidden md:flex" style={{ top: '5%', left: '2%' }}>
+            <div className="absolute z-30 animate-custom-float hidden md:flex" style={{ top: '5%', left: '-10%' }}>
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-xl dark:bg-[#0b0b0a] ring-2 ring-[#eddc0f]/30 dark:ring-[#eddc0f]/20 hover:scale-110 transition-transform duration-300">
                 <span className="text-2xl font-bold bg-gradient-to-r from-[#eddc0f] to-[#9a8c14] bg-clip-text text-transparent animate-pulse-slow">$</span>
               </div>

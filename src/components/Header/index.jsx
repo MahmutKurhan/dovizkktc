@@ -302,22 +302,20 @@ const Header = () => {
               </div>
             </div>
             
-            {/* Dil Seçimi */}
-            <div className="hidden sm:block">
-              <div className="relative">
-                <select 
-                  className="appearance-none pl-3 pr-9 py-1.5 text-sm bg-gray-800 rounded-md text-gray-300 font-medium border-0 focus:outline-none focus:ring-2 focus:ring-[#eddc0f] focus:ring-offset-1 cursor-pointer shadow-sm"
-                  aria-label="Dil Seçimi"
-                >
-                  <option>🇹🇷 TR</option>
-                  <option>🇬🇧 EN</option>
-                  <option>🇩🇪 DE</option>
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
+            {/* Dil Seçimi - Artık tüm ekranlarda görünecek */}
+            <div className="relative">
+              <select 
+                className="appearance-none pl-3 pr-8 py-1.5 text-sm bg-gray-800 rounded-md text-gray-300 font-medium border-0 focus:outline-none focus:ring-2 focus:ring-[#eddc0f] focus:ring-offset-1 cursor-pointer shadow-sm"
+                aria-label="Dil Seçimi"
+              >
+                <option>🇹🇷 Türkçe</option>
+                <option>🇬🇧 English</option>
+                <option>🇩🇪 Deutsch</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1.5 text-gray-400">
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
               </div>
             </div>
 
@@ -382,30 +380,6 @@ const Header = () => {
               </a>
             ))}
           </nav>
-          
-          {/* Döviz Kurları (Mobil) - API ile Entegre Edildi */}
-          <div className="mt-5 grid grid-cols-2 gap-2 bg-[#eddc0f]/10 dark:bg-[#eddc0f]/5 p-3 rounded-lg">
-            {loading ? (
-              <>
-                <div className="animate-pulse h-12 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                <div className="animate-pulse h-12 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                <div className="animate-pulse h-12 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                <div className="animate-pulse h-12 bg-gray-200 dark:bg-gray-700 rounded"></div>
-              </>
-            ) : (
-              <>
-                {currencies.slice(0, 4).map((currency, index) => (
-                  <div key={index} className="flex justify-between items-center p-2 bg-white dark:bg-gray-800 rounded shadow-sm">
-                    <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{currency.code}</span>
-                    <div className="flex items-center">
-                      <span className="font-semibold text-gray-900 dark:text-white">{currency.rate.toFixed(2)}</span>
-                      <span className={`ml-1 ${currency.trend === 'up' ? 'text-green-500' : 'text-[#ea0b0b]'} text-xs`}>{currency.change}</span>
-                    </div>
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
           
           {/* Dil Seçimi */}
           <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">

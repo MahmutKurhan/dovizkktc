@@ -124,7 +124,7 @@ export default function Home() {
   };
 
   return (
-    <Page title="Döviz Kurları | Anlık ve Güncel">
+    <Page title="QrapExchange | KKTC Döviz Bürosu - Güvenli ve Hızlı Döviz İşlemleri">
       <Header forceDarkMode={true} />
       
       {/* Hero Bölümü */}
@@ -162,7 +162,7 @@ export default function Home() {
       
       {/* WhatsApp İletişim Butonu */}
       <a 
-        href="https://wa.me/905001234567"
+        href="https://wa.me/905338519193"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed left-5 bottom-5 z-50 flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
@@ -175,7 +175,7 @@ export default function Home() {
       {/* Yukarı Çık Butonu */}
       <button
         onClick={scrollToTop}
-        className={`fixed right-5 bottom-5 z-50 flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ${
+        className={`fixed right-5 bottom-5 z-50 flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-r from-[#eddc0f] via-[#9a8c14] to-[#eddc0f] text-[#0b0b0a] shadow-lg hover:shadow-[#eddc0f]/25 dark:hover:shadow-[#9a8c14]/40 transform hover:scale-105 transition-all duration-300 ${
           showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
         }`}
         aria-label="Sayfanın en üstüne çık"

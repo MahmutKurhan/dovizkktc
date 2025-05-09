@@ -30,13 +30,13 @@ const About = () => {
               
               <div className="relative overflow-hidden rounded-lg shadow-xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                  src="/dukkan.jpeg" 
                   alt="Döviz Uygulaması Ekibi" 
                   className="w-full h-auto object-cover aspect-[4/3]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#9a8c14]/70 to-transparent pointer-events-none"></div>
                 <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 text-white">
-                  <h4 className="text-lg sm:text-xl font-bold mb-0.5 sm:mb-1 drop-shadow-md">Döviz Uygulaması Ekibi</h4>
+                  <h4 className="text-lg sm:text-xl font-bold mb-0.5 sm:mb-1 drop-shadow-md">QR APEX Ekibi</h4>
                   <p className="text-xs sm:text-sm opacity-90 drop-shadow-md">Finans ve teknoloji uzmanlarından oluşan ekibimiz</p>
                 </div>
               </div>
