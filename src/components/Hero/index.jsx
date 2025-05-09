@@ -97,6 +97,12 @@ const Hero = ({ currencies, loading }) => {
           
           {/* Mobil için mini başlık - Sadece mobilde gösterilecek */}
           <div className="mb-4 text-center md:hidden">
+            <h2 className="text-2xl font-bold text-[#0b0b0a] dark:text-white mb-2">
+              Anlık <span className="text-[#9a8c14] dark:text-[#eddc0f]">Döviz</span> Kurları
+            </h2>
+            <p className="text-sm text-[#0b0b0a]/80 dark:text-gray-300 mb-4">
+              En güncel kurları takip edin, anında dönüşüm yapın
+            </p>
           </div>
           
           {/* Sağ Kısım - Kur Kartı (Tüm ekranlarda gösterilecek) */}
@@ -126,6 +132,28 @@ const Hero = ({ currencies, loading }) => {
               
               {/* Vurgu efekti - Altın renklerle */}
               <div className="absolute -inset-px -z-5 animate-pulse-slow animation-delay-4000 bg-gradient-to-r from-[#eddc0f]/0 via-[#eddc0f]/30 to-[#eddc0f]/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 blur-sm"></div>
+            </div>
+          </div>
+
+          {/* Mobil için Öne Çıkan Özellikler - Kur kartının altında gösterilecek */}
+          <div className={`mt-8 md:hidden transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <h3 className="text-lg font-semibold text-center text-[#0b0b0a] dark:text-white mb-4">Öne Çıkan Özellikler</h3>
+            <div className="space-y-3 bg-white/40 dark:bg-[#0b0b0a]/60 p-4 rounded-lg backdrop-blur-sm border border-[#eddc0f]/10 dark:border-[#eddc0f]/5">
+              {[
+                { title: 'Tüm Dünya Para Birimleri', description: '180+ farklı para biriminin anlık değerleri' },
+                { title: 'Düşük Komisyonlar', description: 'Sadece %0.1 işlem ücreti ile piyasanın en avantajlı oranları' },
+                { title: '7/24 Canlı Veriler', description: 'Kesintisiz güncellenen kurlar ve piyasa verileri' },
+              ].map((feature, index) => (
+                <div key={index} className="flex gap-2">
+                  <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#eddc0f]/20 dark:bg-[#eddc0f]/10">
+                    <HiChevronRight className="h-3 w-3 text-[#9a8c14] dark:text-[#eddc0f]" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium text-[#0b0b0a] dark:text-white">{feature.title}</h4>
+                    <p className="text-xs text-[#0b0b0a]/70 dark:text-gray-400">{feature.description}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { HiCurrencyDollar, HiMail, HiPhone, HiRefresh } from 'react-icons/hi';
+import { HiMail, HiPhone, HiRefresh } from 'react-icons/hi';
 import { FaTwitter, FaFacebook, FaInstagram, FaLinkedin, FaGooglePlay, FaApple } from 'react-icons/fa';
 
 const Footer = () => {
@@ -84,7 +84,11 @@ const Footer = () => {
           {/* Hakkımızda - Altın/Haki tonlarına güncellendi */}
           <div className="col-span-1">
             <h3 className="text-xl font-bold mb-4 flex items-center">
-              <HiCurrencyDollar className="mr-2 h-5 w-5 text-[#9a8c14] dark:text-[#eddc0f]" />
+              <img 
+                src="/APXQR.svg" 
+                alt="Döviz Uygulaması Logo" 
+                className="h-7 mr-2"
+              />
               <span className="bg-gradient-to-r from-[#9a8c14] to-[#eddc0f] dark:from-[#eddc0f] dark:to-[#9a8c14] bg-clip-text text-transparent">
                 Döviz Uygulaması
               </span>

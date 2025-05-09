@@ -154,23 +154,33 @@ const Header = () => {
     >
       <div className="container mx-auto px-4 overflow-hidden">
         <div className="flex items-center justify-between">
-          {/* Logo - karanlık temaya uygun stiller */}
-          <a href="/" className="flex items-center group" aria-label="Ana Sayfa'ya git">
-            <div className="mr-3 relative overflow-hidden transition-transform duration-300 group-hover:scale-105">
-              <div className="w-11 h-11 flex items-center justify-center bg-gradient-to-br from-[#eddc0f] to-[#9a8c14] rounded-full shadow-md">
-                <span className="text-[#0b0b0a] text-xl font-bold transform transition-transform group-hover:scale-110">₺</span>
-                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#eddc0f] to-[#9a8c14] blur-sm opacity-60 -z-10 animate-pulse"></div>
-              </div>
-              <div className="absolute inset-0 bg-white/10 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-            </div>
-            <div>
-              <div className="flex items-baseline">
-                <h1 className="text-2xl font-extrabold text-white tracking-tight">Döviz<span className="text-[#eddc0f]">Pro</span></h1>
-                <div className="h-1.5 w-1.5 rounded-full bg-[#eddc0f] ml-1 animate-pulse"></div>
-              </div>
-              <div className="flex items-center mt-0.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#ea0b0b] mr-1.5 animate-ping"></span>
-                <p className="text-xs font-medium text-gray-400 tracking-wide">CANLI DÖVİZ KURLARI</p>
+          {/* Logo ve Site Adı - QR APEX olarak güncellendi */}
+          <a 
+            href="#hero" 
+            className="flex items-center"
+            onClick={(e) => {
+              e.preventDefault();
+              const heroSection = document.getElementById('hero');
+              if (heroSection) {
+                heroSection.scrollIntoView({ behavior: 'smooth' });
+                setActiveSection('hero');
+              }
+            }}
+          >
+            <div className="relative flex items-center">
+              <img 
+                src="/APXQR.svg" 
+                alt="QR APEX Logo" 
+                className="h-9 sm:h-10 mr-2 transition-all duration-300 hover:scale-105"
+              />
+              <div className="flex flex-col">
+                <h1 className="text-lg font-bold text-[#0b0b0a] dark:text-white leading-tight tracking-tight">
+                  QR <span className="text-[#9a8c14] dark:text-[#eddc0f]">APEX</span>
+                </h1>
+                <div className="flex items-center mt-0.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#ea0b0b] mr-1.5 animate-ping"></span>
+                  <p className="text-xs font-medium text-gray-400 tracking-wide">CANLI DÖVİZ KURLARI</p>
+                </div>
               </div>
             </div>
           </a>

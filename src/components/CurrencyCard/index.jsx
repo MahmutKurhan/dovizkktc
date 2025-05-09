@@ -1,7 +1,22 @@
 const CurrencyCard = ({ currencies = [], loading }) => {
   
-  // En popüler 4 para birimiyle sınırla
-  const topCurrencies = currencies.slice(0, 4);
+  // Öncelikli para birimleri: USD, EUR, GBP
+  const priorityCurrencies = ['USD', 'EUR', 'GBP','KWD'];
+  
+  // En popüler para birimlerini öncelikli olarak göster
+  const topCurrencies = loading ? [] : priorityCurrencies
+    .map(code => currencies.find(c => c.code.startsWith(code)))
+    .filter(Boolean) // null veya undefined değerleri filtrele
+    .slice(0, 4); // en fazla 4 para birimi göster
+  
+  // Eğer öncelikli para birimleri 4'ten azsa, diğerlerinden tamamla
+  if (topCurrencies.length < 4 && currencies.length > 0) {
+    const remainingCurrencies = currencies
+      .filter(c => !priorityCurrencies.some(code => c.code.startsWith(code)))
+      .slice(0, 4 - topCurrencies.length);
+    
+    topCurrencies.push(...remainingCurrencies);
+  }
   
   // Para birimi sembol haritası
   const currencySymbols = {
