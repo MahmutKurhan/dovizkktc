@@ -255,6 +255,18 @@ const Footer = () => {
               <a href="#" className="text-gray-500 hover:text-[#9a8c14] dark:text-gray-400 dark:hover:text-[#eddc0f] text-xs transition-colors duration-200">Yasal Uyarı</a>
             </div>
           </div>
+          
+          {/* Tasarım Kredisi */}
+          <div className="mt-4 pt-2 text-center">
+            <a 
+              href="https://rynexor.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-xs text-gray-400 hover:text-[#9a8c14] dark:hover:text-[#eddc0f] transition-colors duration-200 flex items-center justify-center"
+            >
+              Design By <span className="font-medium ml-1 bg-gradient-to-r from-[#9a8c14] to-[#eddc0f] dark:from-[#eddc0f] dark:to-[#9a8c14] bg-clip-text text-transparent hover:underline">Rynexor</span>
+            </a>
+          </div>
         </div>
       </div>
     </footer>

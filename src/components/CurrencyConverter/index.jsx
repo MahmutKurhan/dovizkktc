@@ -34,11 +34,11 @@ const CurrencyConverter = ({
     'USD': 'bg-[#eddc0f]/20 text-[#9a8c14] dark:bg-[#eddc0f]/10 dark:text-[#eddc0f]',
     'EUR': 'bg-[#9a8c14]/20 text-[#9a8c14] dark:bg-[#9a8c14]/10 dark:text-[#eddc0f]',
     'GBP': 'bg-[#eddc0f]/15 text-[#9a8c14] dark:bg-[#eddc0f]/10 dark:text-[#eddc0f]',
-    'JPY': 'bg-[#9a8c14]/15 text-[#9a8c14] dark:bg-[#9a8c14]/10 dark:text-[#eddc0f]',
+    'JPY': 'bg-[#9a8c14]/15 text-[#9a8c14] dark:bg-[#9a8c0f]/10 dark:text-[#eddc0f]',
     'TRY': 'bg-[#eddc0f]/25 text-[#9a8c14] dark:bg-[#eddc0f]/15 dark:text-[#eddc0f]',
-    'CHF': 'bg-[#9a8c14]/25 text-[#9a8c14] dark:bg-[#9a8c14]/15 dark:text-[#eddc0f]',
+    'CHF': 'bg-[#9a8c14]/25 text-[#9a8c14] dark:bg-[#9a8c0f]/15 dark:text-[#eddc0f]',
     'CAD': 'bg-[#eddc0f]/20 text-[#9a8c14] dark:bg-[#eddc0f]/10 dark:text-[#eddc0f]',
-    'AUD': 'bg-[#9a8c14]/20 text-[#9a8c14] dark:bg-[#9a8c14]/10 dark:text-[#eddc0f]',
+    'AUD': 'bg-[#9a8c14]/20 text-[#9a8c14] dark:bg-[#9a8c0f]/10 dark:text-[#eddc0f]',
   };
   
   // Diğer mevcut useEffect ve fonksiyonlar aynı kalacak
@@ -279,17 +279,26 @@ const CurrencyConverter = ({
                             onChange={(e) => setFromCurrency(e.target.value)}
                             className="w-full appearance-none rounded-lg border border-gray-200 p-3 sm:p-4 pr-10 text-sm sm:text-base shadow-sm focus:border-[#9a8c14] focus:ring focus:ring-[#eddc0f]/20 focus:ring-opacity-50 dark:border-gray-700 dark:bg-[#0b0b0a]/80 dark:text-white transition-all duration-200"
                           >
-                            {/* API'den gelen para birimlerini göster */}
-                            {currencies.map(currency => {
-                              const code = currency.code.split('/')[0];
-                              return (
-                                <option key={code} value={code}>
-                                  {code} ({currencySymbols[code] || code})
-                                </option>
-                              );
-                            })}
-                            {/* TRY seçeneğini de ekle */}
-                            <option value="TRY">TRY (₺)</option>
+                            {/* Öncelikli para birimleri */}
+                            <option value="GBP">GBP ({currencySymbols['GBP'] || 'GBP'})</option>
+                            <option value="EUR">EUR ({currencySymbols['EUR'] || 'EUR'})</option>
+                            <option value="USD">USD ({currencySymbols['USD'] || 'USD'})</option>
+                            <option value="TRY">TRY ({currencySymbols['TRY'] || 'TRY'})</option>
+                            
+                            {/* Diğer para birimleri */}
+                            {currencies
+                              .filter(currency => {
+                                const code = currency.code.split('/')[0];
+                                return !['GBP', 'EUR', 'USD', 'TRY'].includes(code);
+                              })
+                              .map(currency => {
+                                const code = currency.code.split('/')[0];
+                                return (
+                                  <option key={code} value={code}>
+                                    {code} ({currencySymbols[code] || code})
+                                  </option>
+                                );
+                              })}
                           </select>
                           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
                             <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -320,17 +329,26 @@ const CurrencyConverter = ({
                             onChange={(e) => setToCurrency(e.target.value)}
                             className="w-full appearance-none rounded-lg border border-gray-200 p-3 sm:p-4 pr-10 text-sm sm:text-base shadow-sm focus:border-[#9a8c14] focus:ring focus:ring-[#eddc0f]/20 focus:ring-opacity-50 dark:border-gray-700 dark:bg-[#0b0b0a]/80 dark:text-white transition-all duration-200"
                           >
-                            {/* TRY seçeneğini en başa ekle */}
-                            <option value="TRY">TRY (₺)</option>
-                            {/* API'den gelen para birimlerini göster */}
-                            {currencies.map(currency => {
-                              const code = currency.code.split('/')[0];
-                              return (
-                                <option key={code} value={code}>
-                                  {code} ({currencySymbols[code] || code})
-                                </option>
-                              );
-                            })}
+                            {/* Öncelikli para birimleri */}
+                            <option value="GBP">GBP ({currencySymbols['GBP'] || 'GBP'})</option>
+                            <option value="EUR">EUR ({currencySymbols['EUR'] || 'EUR'})</option>
+                            <option value="USD">USD ({currencySymbols['USD'] || 'USD'})</option>
+                            <option value="TRY">TRY ({currencySymbols['TRY'] || 'TRY'})</option>
+                            
+                            {/* Diğer para birimleri */}
+                            {currencies
+                              .filter(currency => {
+                                const code = currency.code.split('/')[0];
+                                return !['GBP', 'EUR', 'USD', 'TRY'].includes(code);
+                              })
+                              .map(currency => {
+                                const code = currency.code.split('/')[0];
+                                return (
+                                  <option key={code} value={code}>
+                                    {code} ({currencySymbols[code] || code})
+                                  </option>
+                                );
+                              })}
                           </select>
                           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
                             <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -346,7 +364,7 @@ const CurrencyConverter = ({
                   <div className="mt-6 sm:mt-8">
                     <div className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-[#eddc0f]/40 dark:border-[#eddc0f]/40 bg-white/80 dark:bg-[#0b0b0a]/50 shadow-2xl backdrop-blur-sm">
                       {/* Arka plan efekti */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-[#eddc0f]/5 via-white/80 to-[#9a8c14]/5 dark:from-[#eddc0f]/10 dark:via-[#0b0b0a]/80 dark:to-[#9a8c14]/10 pointer-events-none"></div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#eddc0f]/5 via-white/80 to-[#9a8c14]/5 dark:from-[#eddc0f]/10 dark:via-[#0b0b0a]/80 dark:to-[#9a8c0f]/10 pointer-events-none"></div>
                       
                       {/* Üst çizgi parlaklık */}
                       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#eddc0f]/70 to-transparent"></div>

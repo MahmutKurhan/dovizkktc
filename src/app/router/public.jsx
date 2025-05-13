@@ -19,6 +19,12 @@ const publicRoutes = {
         Component: (await import("app/pages/home")).default,
       }),
     },
+    {
+      path: "NotificationPanel",
+      lazy: async () => ({
+        Component: (await import("app/pages/NotificationPanel")).default,
+      }),
+    },
   ],
 };
 
